@@ -1,0 +1,16 @@
+﻿@*@*@*@*@using RentACarProject.Data.Models;
+@model User
+
+<form asp-controller="User" asp-action="Create" method="Post">
+    <input asp-for="Username" placeholder="Username" />
+    <input asp-for="Password" placeholder="Password" />
+    <input asp-for="FirstName" placeholder="First name" />
+    <input asp-for="LastName" placeholder="Last name" />
+    <input asp-for="PIN" placeholder="PIN" />
+    <input asp-for="PhoneNumber" placeholder="Phone number" />
+    <input asp-for="Email" placeholder="Email" />
+   @* <input asp-for="RoleId" placeholder="RoleId" />*@
+    @*<input asp-for="Role" placeholder="Role" /> 
+    <input type="submit" value="Submit" class="btn btn-success" />
+    <input type="reset" value="Clear" class="btn btn-danger" />
+</form>*@
