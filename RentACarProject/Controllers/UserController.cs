@@ -17,11 +17,11 @@ namespace RentACarProject.Controllers
         public IActionResult Index()
         {
             List<Users> users = _context.Users.ToList();
-
             return View(users);
         }
 
 
+        [HttpGet]
         public IActionResult Create()
         {
             return View();
@@ -35,6 +35,7 @@ namespace RentACarProject.Controllers
 
             return RedirectToAction("index");
         }
+
 
 
         public IActionResult Details(int? id)
