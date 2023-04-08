@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using RentACarProject.Data;
 using RentACarProject.Data.Models;
+using RentACarProject.Models;
 
 namespace RentACarProject.Controllers
 {
@@ -25,6 +26,58 @@ namespace RentACarProject.Controllers
             var applicationDbContext = _context.Rentals.Include(r => r.Car).Include(r => r.User);
             return View(await applicationDbContext.ToListAsync());
         }
+
+
+        public IActionResult Search()
+        {
+            return View();
+        }
+        [HttpPost]
+        public async Task<IActionResult> Search(PeriodViewModel period)
+        {
+            List<Car> cars = new List<Car>();
+            cars=_context.Cars.ToList();
+            var carsAvailable= new List<Car>();
+
+            foreach (var car in cars)
+            {
+                bool available = true;
+                foreach (var rental in car.Rentals)
+                {
+                    if (rental.PickUpDate>=period.PickUpDate && rental.PickUpDate<=period.DropOffDate)
+                    {
+                        available= false;
+                        break;
+                    }
+                    if (rental.DropOffDate>=period.PickUpDate && rental.DropOffDate<=period.DropOffDate)
+                    {
+                        available = false;
+                        break;
+                    }
+                    if (rental.PickUpDate<=period.PickUpDate && rental.DropOffDate>=period.DropOffDate)
+                    {
+                        available = false;
+                        break;
+                    }
+
+                }
+                if (available)
+                {
+                    carsAvailable.Add(car);
+                }
+            }
+
+
+            //Dictionary<int, Car> model= new Dictionary<int, Car>();
+            //foreach (var car in cars)
+            //{ model[car.Id] = car; }
+            var s = Newtonsoft.Json.JsonConvert.SerializeObject(carsAvailable);
+
+            TempData["Model"] = s;
+            return carsAvailable != null ?   RedirectToAction("ViewAvailable", "Cars") :
+                          Problem("Entity set 'ApplicationDbContext.Cars'  is null.");
+        }
+
 
         // GET: Rentals/Details/5
         public async Task<IActionResult> Details(int? id)
