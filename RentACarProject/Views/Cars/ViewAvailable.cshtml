@@ -60,15 +60,10 @@
                     @Html.DisplayFor(modelItem => item.PricePerDay)
                 </td>
                 <td>
-                    <div class="form-group">
-                        <input type="submit" value="Rental" />
-                    </div>
+                    <form asp-controller="Rentals"  asp-action="Create">
+                        <input type="submit" value="Rent" /> 
+                    </form>
                 </td>
-                @*<td>
-                    <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                    <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                    <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-                </td>*@
             </tr>
         }
     </tbody>

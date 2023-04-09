@@ -30,10 +30,6 @@
                         </li>
                         
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-controller="User" asp-action="Index">All users</a>
-                        </li>
-                        
-                        <li class="nav-item">
                             <a class="nav-link text-dark" asp-controller="Cars" asp-action="Index">All cars</a>
                         </li>
 
@@ -45,19 +41,22 @@
                             <a class="nav-link text-dark" asp-controller="Rentals" asp-action="Search">Search cars</a>
                         </li>
 
-
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-controller="Rentals" asp-action="Index">All rentals</a>
-                        </li>
-
                         @if (signInManager.IsSignedIn(User) && User.IsInRole("Administrator"))
-                        {
+                        { 
+                            <li class="nav-item">
+                                <a class="nav-link text-dark"  asp-controller="Cars" asp-action="Create">Add car</a>
+                            </li>
+                            
                             <li class="nav-item">
                                 <a class="nav-link text-dark"  asp-controller="User" asp-action="Create">Add user</a>
                             </li>
 
                             <li class="nav-item">
-                                <a class="nav-link text-dark"  asp-controller="Cars" asp-action="Create">Add car</a>
+                                <a class="nav-link text-dark" asp-controller="User" asp-action="Index">All users</a>
+                            </li>
+
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-controller="Rentals" asp-action="Index">All rentals</a>
                             </li>
                         }
 

@@ -75,7 +75,7 @@ namespace RentACarProject.Controllers
 
             TempData["Model"] = s;
             return carsAvailable != null ?   RedirectToAction("ViewAvailable", "Cars") :
-                          Problem("Entity set 'ApplicationDbContext.Cars'  is null.");
+                          Problem("No available cars");
         }
 
 
@@ -103,7 +103,11 @@ namespace RentACarProject.Controllers
         public IActionResult Create()
         {
             ViewData["CarId"] = new SelectList(_context.Cars, "Id", "Id");
-            ViewData["UserId"] = new SelectList(_context.Users, "Id", "Id");
+            ViewData["UserId"] = GetUserId();
+            //??????????
+            ViewData["PickUpDate"] = new SelectList(_context.Rentals, "PickUpDate", "PickUpDate");
+            ViewData["DropOffDate"] = new SelectList(_context.Rentals, "DropOffDate", "DropOffDate");
+            //ViewData["UserId"] = new SelectList(_context.Users, "Id", "Id");
             return View();
         }
 
@@ -222,6 +226,14 @@ namespace RentACarProject.Controllers
         private bool RentalExists(int id)
         {
           return (_context.Rentals?.Any(e => e.Id == id)).GetValueOrDefault();
+        }
+
+        private string GetUserId()
+        {
+            var nsme = User.Identity?.Name;
+            var user = _context.Users.FirstOrDefault(x => x.Email== nsme);
+
+            return user.Id;
         }
     }
 }
