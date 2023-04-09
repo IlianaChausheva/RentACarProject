@@ -15,6 +15,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
 using RentACarProject.Data.Models;
+using RentACarProject.Data;
 
 namespace RentACarProject.Areas.Identity.Pages.Account
 {
@@ -22,11 +23,13 @@ namespace RentACarProject.Areas.Identity.Pages.Account
     {
         private readonly SignInManager<Users> _signInManager;
         private readonly ILogger<LoginModel> _logger;
+        private ApplicationDbContext _context;
 
-        public LoginModel(SignInManager<Users> signInManager, ILogger<LoginModel> logger)
+        public LoginModel(SignInManager<Users> signInManager, ILogger<LoginModel> logger, ApplicationDbContext context)
         {
             _signInManager = signInManager;
             _logger = logger;
+            _context = context;
         }
 
         /// <summary>
@@ -68,7 +71,7 @@ namespace RentACarProject.Areas.Identity.Pages.Account
             
 
             [Required]
-            public string Username { get; set; }
+            public string UserName { get; set; }
 
             /// <summary>
             ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
@@ -113,7 +116,9 @@ namespace RentACarProject.Areas.Identity.Pages.Account
             {
                 // This doesn't count login failures towards account lockout
                 // To enable password failures to trigger account lockout, set lockoutOnFailure: true
-                var result = await _signInManager.PasswordSignInAsync(Input.Username, Input.Password, Input.RememberMe, lockoutOnFailure: false);
+  
+
+                var result = await _signInManager.PasswordSignInAsync( Input.UserName, Input.Password, Input.RememberMe, lockoutOnFailure: false);
                 if (result.Succeeded)
                 {
                     _logger.LogInformation("User logged in.");

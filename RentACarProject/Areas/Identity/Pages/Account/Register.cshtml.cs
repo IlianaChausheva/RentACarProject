@@ -92,8 +92,8 @@ namespace RentACarProject.Areas.Identity.Pages.Account
             public string PhoneNumber { get; set; }
 
             [Required]
-            [Display(Name = "Username")]
-            public string Username { get; set; }
+            [Display(Name = "UserName")]
+            public string UserName { get; set; }
 
 
             /// <summary>
@@ -142,8 +142,10 @@ namespace RentACarProject.Areas.Identity.Pages.Account
                 user.FirstName = Input.FirstName;
                 user.LastName = Input.LastName;
                 user.PIN = Input.PIN;
+                user.UserName = Input.UserName;
+                user.UserName=Input.UserName;
 
-                await _userStore.SetUserNameAsync(user, Input.Email, CancellationToken.None);
+                await _userStore.SetUserNameAsync(user, Input.UserName, CancellationToken.None);
                 await _emailStore.SetEmailAsync(user, Input.Email, CancellationToken.None);
                 var result = await _userManager.CreateAsync(user, Input.Password);
 
