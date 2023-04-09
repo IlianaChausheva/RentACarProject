@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using RentACarProject.Data;
 
@@ -11,9 +12,11 @@ using RentACarProject.Data;
 namespace RentACarProject.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230408080211_Rentals")]
+    partial class Rentals
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -280,7 +283,6 @@ namespace RentACarProject.Migrations
                         .HasColumnType("bit");
 
                     b.Property<string>("UserName")
-                        .IsRequired()
                         .HasMaxLength(256)
                         .HasColumnType("nvarchar(256)");
 
@@ -357,7 +359,7 @@ namespace RentACarProject.Migrations
                         .IsRequired();
 
                     b.HasOne("RentACarProject.Data.Models.Users", "User")
-                        .WithMany("Rentals")
+                        .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -368,11 +370,6 @@ namespace RentACarProject.Migrations
                 });
 
             modelBuilder.Entity("RentACarProject.Data.Models.Car", b =>
-                {
-                    b.Navigation("Rentals");
-                });
-
-            modelBuilder.Entity("RentACarProject.Data.Models.Users", b =>
                 {
                     b.Navigation("Rentals");
                 });

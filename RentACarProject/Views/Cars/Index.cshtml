@@ -1,14 +1,14 @@
-﻿@model IEnumerable<RentACarProject.Data.Models.Car>
+﻿@model IEnumerable<RentACarProject.Data.Models.Car> 
+@inject Microsoft.AspNetCore.Identity.SignInManager<RentACarProject.Data.Models.Users> signInManager;
+
 
 @{
     ViewData["Title"] = "Index";
 }
 
-<h1>Index</h1>
+<h1>Cars list</h1>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
+
 <table class="table">
     <thead>
         <tr>
@@ -29,6 +29,9 @@
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.PricePerDay)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Rentals)
             </th>
             <th></th>
         </tr>
@@ -55,9 +58,37 @@
                 @Html.DisplayFor(modelItem => item.PricePerDay)
             </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                    @if (signInManager.IsSignedIn(User) && User.IsInRole("Administrator"))
+                    {
+                        <div class="form-group">
+                        <input type="submit" value="See rentals" />
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="form-group">
+                            <p> limited access </p>
+                        </div>
+                    }
+            </td>
+            <td>
+                    
+                    <a asp-action="Details" asp-route-id="@item.Id">
+                        <button class="btn btn-block btn-primary" type="submit" aria-label="Details">Details</button>
+                    </a>
+
+                    @if (signInManager.IsSignedIn(User) && User.IsInRole("Administrator"))
+                    {
+                        <a asp-action="Edit" asp-route-id="@item.Id">
+                            <button class="btn btn-block btn-success" type="submit" aria-label="Edit">Edit</button>
+                        </a>
+
+                        <a asp-action="Delete" asp-route-id="@item.Id">
+                            <button class="btn btn-block btn-danger" type="submit" aria-label="Delete">Delete</button>
+                        </a>
+                    }
+                   
+                
             </td>
         </tr>
 }

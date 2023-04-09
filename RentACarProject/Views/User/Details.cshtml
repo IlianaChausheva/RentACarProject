@@ -1,10 +1,55 @@
-﻿@*@using RentACarProject.Data.Models;
-@model User
-<div class="card-body">
-    <h5 class="card-title">@Model.FirstName @Model.LastName</h5>
-    <p class="card-text">@Model.Username @Model.Password</p>
-    <p class="card-text"><small class="text-muted">PIN: @Model.PIN </small></p>
-    <p class="card-text"><small class="text-muted">Phone number: @Model.PhoneNumber</small></p>
-    <p class="card-text"><small class="text-muted">Email: @Model.Email </small></p>
-    <p class="card-text"><small class="text-muted">Role: @Model.Role </small></p>
-</div>*@
+﻿@model RentACarProject.Data.Models.Users
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Details</h1>
+
+<div>
+    <h4>User</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.FirstName)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.FirstName)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.LastName)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.LastName)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.UserName)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.UserName)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.PIN)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.PIN)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.PhoneNumber)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.PhoneNumber)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Email)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Email)
+        </dd>
+    </dl>
+</div>
+<div>
+    @*<a asp-action="Edit" asp-route-id="@Model?.Id">Edit</a> |*@
+    <a asp-action="Index">Back to List</a>
+</div>
+

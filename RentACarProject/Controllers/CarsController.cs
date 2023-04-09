@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json;
 using RentACarProject.Data;
 using RentACarProject.Data.Models;
 
@@ -25,6 +26,25 @@ namespace RentACarProject.Controllers
               return _context.Cars != null ? 
                           View(await _context.Cars.ToListAsync()) :
                           Problem("Entity set 'ApplicationDbContext.Cars'  is null.");
+        }
+
+        public async Task<IActionResult> ViewAvailable()
+        {
+            List<Car> model = new List<Car>();
+            //if (TempData["MyModelDict"] is Dictionary<int, Car> dict)
+            //{
+            //    model = dict.Values.ToList();                
+            //}
+
+            if (TempData["Model"] is string s)
+            {
+                model = JsonConvert.DeserializeObject<List<Car>>(s);
+                // use newUser object now as needed
+            }
+
+            return model != null ?
+            View(model) :
+            Problem("No cars available");
         }
 
         // GET: Cars/Details/5
