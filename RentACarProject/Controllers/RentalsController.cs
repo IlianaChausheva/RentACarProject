@@ -68,9 +68,13 @@ namespace RentACarProject.Controllers
             }
 
 
-            //Dictionary<int, Car> model= new Dictionary<int, Car>();
+            //Dictionary<int, Car> model= new Dictionary<int, Car>();-
             //foreach (var car in cars)
             //{ model[car.Id] = car; }
+
+            //ViewBag.PickUpDate = period.PickUpDate;
+            //ViewBag.DropOffDate = period.DropOffDate;
+
             var s = Newtonsoft.Json.JsonConvert.SerializeObject(carsAvailable);
 
             TempData["Model"] = s;
@@ -105,8 +109,8 @@ namespace RentACarProject.Controllers
             ViewData["CarId"] = new SelectList(_context.Cars, "Id", "Id");
             ViewData["UserId"] = GetUserId();
             //??????????
-            ViewData["PickUpDate"] = new SelectList(_context.Rentals, "PickUpDate", "PickUpDate");
-            ViewData["DropOffDate"] = new SelectList(_context.Rentals, "DropOffDate", "DropOffDate");
+            //ViewData["PickUpDate"] = new SelectList(_context.Rentals, "PickUpDate", "PickUpDate");
+            //ViewData["DropOffDate"] = new SelectList(_context.Rentals, "DropOffDate", "DropOffDate");
             //ViewData["UserId"] = new SelectList(_context.Users, "Id", "Id");
             return View();
         }
@@ -119,13 +123,15 @@ namespace RentACarProject.Controllers
         public async Task<IActionResult> Create([Bind("Id,CarId,UserId,PickUpDate,DropOffDate")] Rental rental)
         {
             if (ModelState.IsValid)
-            {
+            { // ViewData["CarId"] = new SelectList(_context.Cars, "Id", "Id", rental.CarId);
+            //ViewData["UserId"] = new SelectList(_context.Users, "Id", "Id", rental.UserId);
                 _context.Add(rental);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
             ViewData["CarId"] = new SelectList(_context.Cars, "Id", "Id", rental.CarId);
             ViewData["UserId"] = new SelectList(_context.Users, "Id", "Id", rental.UserId);
+
             return View(rental);
         }
 

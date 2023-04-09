@@ -21,6 +21,8 @@
                 </button>
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
+
+
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                         </li>
@@ -28,37 +30,42 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-controller="Home" asp-action="Privacy">Privacy</a>
                         </li>
-                        
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-controller="Cars" asp-action="Index">All cars</a>
-                        </li>
 
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-controller="Rentals" asp-action="Create">Rental</a>
-                        </li>
-
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-controller="Rentals" asp-action="Search">Search cars</a>
-                        </li>
-
-                        @if (signInManager.IsSignedIn(User) && User.IsInRole("Administrator"))
-                        { 
+                        @if (signInManager.IsSignedIn(User))
+                        {
                             <li class="nav-item">
-                                <a class="nav-link text-dark"  asp-controller="Cars" asp-action="Create">Add car</a>
-                            </li>
-                            
-                            <li class="nav-item">
-                                <a class="nav-link text-dark"  asp-controller="User" asp-action="Create">Add user</a>
+                                <a class="nav-link text-dark" asp-controller="Cars" asp-action="Index">Cars</a>
                             </li>
 
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-controller="User" asp-action="Index">All users</a>
+                                <a class="nav-link text-dark" asp-controller="Rentals" asp-action="Create">Rent</a>
                             </li>
 
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-controller="Rentals" asp-action="Index">All rentals</a>
+                                <a class="nav-link text-dark" asp-controller="Rentals" asp-action="Search">Search cars</a>
                             </li>
+
+                            @if (signInManager.IsSignedIn(User) && User.IsInRole("Administrator"))
+                            {
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-controller="Cars" asp-action="Create">Add car</a>
+                                </li>
+
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-controller="User" asp-action="Create">Add user</a>
+                                </li>
+
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-controller="User" asp-action="Index">Users</a>
+                                </li>
+
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-controller="Rentals" asp-action="Index">Rentals</a>
+                                </li>
+                            }
                         }
+
+                        
 
                     </ul>
                     <partial name="_LoginPartial" />
